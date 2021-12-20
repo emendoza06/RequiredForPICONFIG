@@ -3,7 +3,7 @@
 cd ~/RequiredForPICONFIG
 #Get the first column of routing table entries, which are the Destination IP addresses
 #awk $1 gets the first argument of every line
-myVar=$(netstat -rn | awk 'FNR > 3 {print $1}'| awk '/10.0.0/ {print}')
+myVar=$(netstat -rn | awk '/10.0.0/ {print}'| awk '! /10.0.0.0/ {print $1}')
 #declare PING_TIMES
 INDEX=1
 
@@ -21,9 +21,8 @@ do
 
 		outputFileFinal="./Plots/scpOutputFinal${i}.dat"
 		
-		echo epharra${host_id}@${i}
-		
 		TIMEFORMAT=%R;
+		#The bash time function writes its output to STDERR rather rthan STDOUT. In order to redirect 'time's' output, we must capture stderr of the subshell which contain time's results. Here, we are saying stream '2' is redirected to /dev/null because we don't need the output from the scp command itself. Rather, we need the ouput of time, which is stream 1. 2>&1 saves stream 1 into the variable scp_time.
 		scp_time=$(time ( scp ./Plots/100bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
 		printf "100bytes\t%s" ${scp_time} > $outputFile
 		scp_time2=$(time ( scp ./Plots/10000bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )

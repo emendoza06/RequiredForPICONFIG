@@ -3,8 +3,10 @@
 cd ~/RequiredForPICONFIG
 #Get the first column of routing table entries, which are the Destination IP addresses
 #awk $1 gets the first argument of every line
-myVar=$(netstat -rn | awk 'FNR > 3 {print $1}'| awk '/10.0.0/ {print}')
-#declare PING_TIMES
+myVar=$(netstat -rn | awk '/10.0.0/ {print}'| awk '! /10.0.0.0/ {print $1}')
+ping_count_custom=$(awk 'NR==1 {print; exit}' pi*config.txt)
+echo $ping_count_custom
+
 INDEX=1
 
 #loop through each line in routing table (Lines are saved in variable called myVar)
@@ -28,7 +30,7 @@ do
 
 		outputFileFinal="./Plots/pingOutputFinal${i}.dat"
 		
-		ping -c 10 $i | awk '/time/ && /icmp_seq/ {print}' | awk '{print $7}' | awk -F= '{print $2}' > $outputFileFinal
+		ping -c $ping_count_custom $i | awk '/time/ && /icmp_seq/ {print}' | awk '{print $7}' | awk -F= '{print $2}' > $outputFileFinal
 
 		avg_rtt=$(awk '{sum+=$1} END {print sum/NR}' $outputFileFinal)
 

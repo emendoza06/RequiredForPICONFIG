@@ -38,4 +38,5 @@ do
 	#output for user, to narrate that we are entering desired route entry
 	echo "Entering route 10.0.0.$destination via 10.0.0.$source in pi $(hostname -I)"
 
-done < "$configFile"
+	#echo $line
+done < <(tail -n "+2" $configFile)
