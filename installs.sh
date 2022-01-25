@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #OpenSSH suite consists of the following tools: ssh, scp 
-sudo apt install open-server -y
+sudo apt install openssh-server -y
 #Opens port to allow for ssh
 sudo ufw allow ssh
 #Text editor program
