@@ -33,19 +33,19 @@ do
 		#The bash time function writes its output to STDERR rather rthan STDOUT. In order to redirect 'time's' output, we must capture stderr of the subshell which contain time's results. Here, we are saying stream '2' is redirected to /dev/null because we don't need the output from the scp command itself. Rather, we need the ouput of time, which is stream 1. 2>&1 saves stream 1 into the variable scp_time.
 		
 		#The first time we scp a file, it takes a long time. The first time we call scp, it includes the time it took to find host, and then transfer file. We don't use the data of this first scp call. 
-		scp_time_first=$(time ( scp ./Plots/100bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
+		scp_time_first=$(time ( scp ./Plots/100bytes.txt umslpi${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
 		
 		#scp the 100bytes.txt file again. This time, it will accurately show the time it took to transfer the file.
-		scp_time=$(time (scp ./Plots/100bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
+		scp_time=$(time (scp ./Plots/100bytes.txt umslpi${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
 		#Store results
 		printf "100bytes\t%s" ${scp_time} > $outputFile
 		
 		#scp file 2 and append results to outputFile
-		scp_time2=$(time ( scp ./Plots/10000bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
+		scp_time2=$(time ( scp ./Plots/10000bytes.txt umslpi${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
 		printf "\n10000bytes\t%s"  ${scp_time2} >> $outputFile
 
 		#scp file 3 and append results to outputFile
-		scp_time3=$(time ( scp ./Plots/1000000bytes.txt epharra${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
+		scp_time3=$(time ( scp ./Plots/1000000bytes.txt umslpi${host_id}@${i}:~/Documents 2>/dev/null 1>&2 ) 2>&1 )
 		printf "\n1000000bytes\t%s" ${scp_time3} >> $outputFile
 
 		#Add line numbers as a column. The reason we are redirecting the output to a new file, and not directly writing to outputFile, is because awk does not allow for us to read and write to the same file in one call. We must read from one file and write to a separate file.
