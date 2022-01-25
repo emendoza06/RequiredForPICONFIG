@@ -33,7 +33,7 @@ do
 	fi
 
 	#Enter sources and destinations into routing table
-	echo Evanescence1 | sudo -S ip route add "10.0.0.$destination" via "10.0.0.$source"	
+	echo UMSLPi | sudo -S ip route add "10.0.0.$destination" via "10.0.0.$source"	
 	
 	#output for user, to narrate that we are entering desired route entry
 	echo "Entering route 10.0.0.$destination via 10.0.0.$source in pi $(hostname -I)"
