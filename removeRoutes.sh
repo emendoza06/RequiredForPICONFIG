@@ -11,6 +11,6 @@ find ~/RequiredForPICONFIG -type f -name 'pi*config.txt' -delete
 for i in $myVar;
 	#For each line in routing table,
 do
-	echo Evanescence1 | sudo -S ip route delete $i
+	echo UMSLPi | sudo -S ip route delete $i
 	echo "Deleting route $i in pi $(hostname -I)"
 done
