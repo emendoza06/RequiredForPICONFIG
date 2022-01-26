@@ -16,3 +16,5 @@ sudo apt-get install openjdk-8-jdk -y
 sudo apt-get install git
 #To be able to use netstat command
 sudo apt install net-tools -y
+#To use the plotting tool, gnuplot
+sudo apt install gnuplot -y
